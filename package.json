@@ -1,0 +1,33 @@
+{
+  "name": "bitcoin-util",
+  "version": "0.0.0",
+  "description": "Utility functions for Bitcoin hashes and targets",
+  "main": "index.js",
+  "scripts": {
+    "test": "standard && tap test.js --cov"
+  },
+  "keywords": [
+    "bitcoin",
+    "webcoin",
+    "util",
+    "utils",
+    "hash",
+    "hashes",
+    "target",
+    "blockchain"
+  ],
+  "author": "Matt Bell <mappum@gmail.com>",
+  "license": "MIT",
+  "dependencies": {
+    "browserify-buffertools": "^1.0.2",
+    "buffertools": "^2.1.3"
+  },
+  "browser": {
+    "buffertools": "browserify-buffertools"
+  },
+  "devDependencies": {
+    "bn.js": "^4.6.4",
+    "standard": "^5.4.1",
+    "tap": "^5.1.1"
+  }
+}
