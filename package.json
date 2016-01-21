@@ -20,14 +20,16 @@
   "license": "MIT",
   "dependencies": {
     "bn.js": "^4.6.4",
-    "browserify-buffertools": "^1.0.2",
-    "buffertools": "^2.1.3"
-  },
-  "browser": {
-    "buffertools": "browserify-buffertools"
+    "browserify-buffertools": "^1.0.2"
   },
   "devDependencies": {
     "standard": "^5.4.1",
     "tap": "^5.1.1"
+  },
+  "optionalDependencies": {
+    "buffertools": "^2.1.3"
+  },
+  "browser": {
+    "buffertools": "browserify-buffertools"
   }
 }

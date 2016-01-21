@@ -1,4 +1,9 @@
-var buffertools = require('buffertools')
+var buffertools
+try {
+  buffertools = require('buffertools')
+} catch (e) {
+  buffertools = require('browserify-buffertools')
+}
 var BN = require('bn.js')
 
 function isHexString (str) {

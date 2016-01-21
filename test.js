@@ -1,7 +1,13 @@
 var test = require('tap').test
 var BN = require('bn.js')
-var buffertools = require('buffertools')
-var u = require('.')
+var u = require('./')
+
+var buffertools
+try {
+  buffertools = require('buffertools')
+} catch (e) {
+  buffertools = require('browserify-buffertools')
+}
 
 test('toHash', function (t) {
   t.throws(function () { u.toHash('012345') }, 'throws for invalid hash length')
