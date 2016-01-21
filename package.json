@@ -27,7 +27,6 @@
     "buffertools": "browserify-buffertools"
   },
   "devDependencies": {
-    "bn.js": "^4.6.4",
     "standard": "^5.4.1",
     "tap": "^5.1.1"
   }
