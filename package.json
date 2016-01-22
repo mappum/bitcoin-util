@@ -1,6 +1,6 @@
 {
   "name": "bitcoin-util",
-  "version": "0.0.1",
+  "version": "1.0.0",
   "description": "Utility functions for Bitcoin hashes and targets",
   "main": "index.js",
   "scripts": {
