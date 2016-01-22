@@ -17,7 +17,7 @@ function toHash (hex) {
   return buffertools.reverse(new Buffer(hex, 'hex'))
 }
 
-function toCompactTarget (target) {
+function compressTarget (target) {
   if (!target.bitLength) {
     // if target is not a BN
     if (Buffer.isBuffer(target)) {
@@ -33,9 +33,9 @@ function toCompactTarget (target) {
     }
   }
 
-  var bits = target.bitLength()
+  var nBits = target.bitLength()
   var targetString = target.toString(16)
-  var exponent = Math.ceil(bits / 8)
+  var exponent = Math.ceil(nBits / 8)
   if (targetString.length % 2 === 1) targetString = '0' + targetString
   var mantissa = Number.parseInt(targetString.substr(0, 6), 16)
   if (mantissa & 0x800000) {
@@ -45,7 +45,19 @@ function toCompactTarget (target) {
   return (exponent << 24) | mantissa
 }
 
+function expandTarget (bits) {
+  if (bits > 0xffffffff) {
+    throw new Error('"bits" may not be larger than 4 bytes')
+  }
+  var mantissa = bits & 0x007fffff
+  var exponent = ((bits >>> 24) * 8) - 24
+  exponent = Math.max(exponent, 0)
+  var target = (new BN(mantissa)).iushln(exponent)
+  return target
+}
+
 module.exports = {
   toHash: toHash,
-  toCompactTarget: toCompactTarget
+  compressTarget: compressTarget,
+  expandTarget: expandTarget
 }
