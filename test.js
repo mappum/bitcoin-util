@@ -20,7 +20,7 @@ test('toHash', function (t) {
   t.end()
 })
 
-test('toCompactTarget', function (t) {
+test('compressTarget', function (t) {
   var targets = [
     {
       hex: 'ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff',
@@ -46,14 +46,14 @@ test('toCompactTarget', function (t) {
   t.test('bn.js', function (t) {
     targets.forEach(function (target) {
       var bn = new BN(target.hex, 'hex')
-      t.equal(u.toCompactTarget(bn), target.compact, target)
+      t.equal(u.compressTarget(bn), target.compact, target)
     })
     t.end()
   })
   t.test('Buffer', function (t) {
     targets.forEach(function (target) {
       var buf = new Buffer(target.hex, 'hex')
-      t.equal(u.toCompactTarget(buf), target.compact, target)
+      t.equal(u.compressTarget(buf), target.compact, target)
     })
     t.end()
   })
@@ -61,15 +61,43 @@ test('toCompactTarget', function (t) {
     targets.forEach(function (target) {
       var reversed = new Buffer(target.hex, 'hex')
       reversed = buffertools.reverse(reversed).toString('hex')
-      t.equal(u.toCompactTarget(reversed), target.compact, target)
+      t.equal(u.compressTarget(reversed), target.compact, target)
     })
     t.end()
   })
   t.test('invalid type', function (t) {
     t.throws(function () {
-      u.toCompactTarget(123)
+      u.compressTarget(123)
     })
     t.end()
+  })
+  t.end()
+})
+
+test('expandTarget', function (t) {
+  var targets = [
+    {
+      hex: 'ffff0000000000000000000000000000000000000000000000000000',
+      compact: 0x1d00ffff
+    },
+    {
+      hex: '7fff0000000000000000000000000000000000000000000000000000',
+      compact: 0x1c7fff00
+    },
+    {
+      hex: '9b31b000000000000000000000000000000000000000000',
+      compact: 0x1809b31b
+    },
+    {
+      hex: '0',
+      compact: 0
+    }
+  ]
+  targets.forEach(function (target) {
+    t.equal(u.expandTarget(target.compact).toString('hex'), target.hex, target)
+  })
+  t.throws(function () {
+    u.expandTarget(0xff00ff00ff)
   })
   t.end()
 })
