@@ -14,16 +14,12 @@
 
 #### `toHash(hex)`
 
-Takes a hex string that contains a Bitcoin hash as input, and returns a Bitcoin-protocol-friendly Big-endian Buffer. Throws an error if the hex string is not of length 64 (representing a 256-bit hash).
+Takes a hex string that contains a Bitcoin hash as input, and returns a Bitcoin-protocol-friendly little-endian Buffer. Throws an error if the hex string is not of length 64 (representing a 256-bit hash).
 
-#### `compressTarget(n)`
+#### `compressTarget(target)`
 
-Converts the difficulty target `n` to its compact representation (used in the "bits" field in block headers). `n` can be a `Buffer`, hex string, or `BN` (from the [`bn.js`](https://github.com/indutny/bn.js) package).
+Converts the difficulty target `target` to its compact representation (used in the "bits" field in block headers). `target` should be a `Buffer` (little-endian, the zeroes should be at the end). Returns a `number`.
 
-#### `compressTarget(n)`
+#### `expandTarget(bits)`
 
-Converts the compressed target integer `n` to its full target hash representation. Returns a `BN` (from the [`bn.js`](https://github.com/indutny/bn.js) package).
-
-## NOTE
-
-`bitcoin-util` uses the [`buffertools`](https://github.com/bnoordhuis/node-buffertools) package as a dependency, which is a compiled native module. When browserifying, the [`browserify-buffertools`](https://github.com/maraoz/browserify-buffertools) package will be used instead (to keep browser compatibility).
+Converts the compressed target integer `bits` to its target hash representation. Returns a `Buffer`.
