@@ -1,13 +1,6 @@
 var test = require('tap').test
 var u = require('./')
 
-var buffertools
-try {
-  buffertools = require('buffertools')
-} catch (e) {
-  buffertools = require('browserify-buffertools')
-}
-
 test('toHash', function (t) {
   t.throws(function () { u.toHash('012345') }, 'throws for invalid hash length')
   t.throws(function () { u.toHash('') }, 'throws for empty string')
@@ -42,18 +35,10 @@ var targets = [
   }
 ]
 test('compressTarget', function (t) {
-  t.test('Buffer', function (t) {
+  t.test('compress targets', function (t) {
     targets.forEach(function (target) {
       var buf = new Buffer(target.expanded, 'hex')
       t.equal(u.compressTarget(buf), target.compact, target)
-    })
-    t.end()
-  })
-  t.test('hex string', function (t) {
-    targets.forEach(function (target) {
-      var reversed = new Buffer(target.expanded, 'hex')
-      reversed = buffertools.reverse(reversed).toString('hex')
-      t.equal(u.compressTarget(reversed), target.compact, target)
     })
     t.end()
   })

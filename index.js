@@ -20,12 +20,7 @@ function toHash (hex) {
 
 function compressTarget (target) {
   if (!Buffer.isBuffer(target)) {
-    if (isHexString(target)) {
-      target = new Buffer(target, 'hex')
-      target = buffertools.reverse(target)
-    } else {
-      throw new Error('target must be a "Buffer" or a hex string')
-    }
+    throw new Error('target must be a "Buffer"')
   }
   if (target.length !== 32) {
     throw new Error('target must be 32 bytes long')
