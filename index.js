@@ -4,7 +4,6 @@ try {
 } catch (e) {
   buffertools = require('browserify-buffertools')
 }
-var BN = require('bn.js')
 
 var nullHash = new Buffer('0000000000000000000000000000000000000000000000000000000000000000', 'hex')
 
@@ -20,27 +19,24 @@ function toHash (hex) {
 }
 
 function compressTarget (target) {
-  if (!target.bitLength) {
-    // if target is not a BN
-    if (Buffer.isBuffer(target)) {
-      // target is Buffer
-      target = new BN(target.toString('hex'), 16)
-    } else if (isHexString(target)) {
-      // target is hex string
-      var buf = new Buffer(target, 'hex')
-      buf = buffertools.reverse(buf)
-      target = new BN(buf.toString('hex'), 16)
+  if (!Buffer.isBuffer(target)) {
+    if (isHexString(target)) {
+      target = new Buffer(target, 'hex')
+      target = buffertools.reverse(target)
     } else {
-      throw new Error('target must be of type "BN" (from bn.js package), "Buffer", or a hex string')
+      throw new Error('target must be a "Buffer" or a hex string')
     }
   }
+  if (target.length !== 32) {
+    throw new Error('target must be 32 bytes long')
+  }
 
-  var nBits = target.bitLength()
-  var targetString = target.toString(16)
-  var exponent = Math.ceil(nBits / 8)
-  if (targetString.length % 2 === 1) targetString = '0' + targetString
-  var mantissa = Number.parseInt(targetString.substr(0, 6), 16)
-  if (mantissa & 0x800000) {
+  for (var i = 0; i < 29; i++) {
+    if (target[i]) break
+  }
+  var exponent = 32 - i
+  var mantissa = target.readUInt32BE(i) >> 8 & 0x00ffffff
+  if (mantissa & 0x00800000) {
     mantissa >>= 8
     exponent++
   }
@@ -51,10 +47,12 @@ function expandTarget (bits) {
   if (bits > 0xffffffff) {
     throw new Error('"bits" may not be larger than 4 bytes')
   }
+  var exponent = bits >>> 24
+  if (exponent <= 3) throw new Error('target exponent must be > 3')
+  if (exponent > 32) throw new Error('target exponent must be < 32')
   var mantissa = bits & 0x007fffff
-  var exponent = ((bits >>> 24) * 8) - 24
-  exponent = Math.max(exponent, 0)
-  var target = (new BN(mantissa)).iushln(exponent)
+  var target = new Buffer(32).fill(0)
+  target.writeUInt32BE(mantissa << 8, 32 - exponent)
   return target
 }
 
