@@ -6,6 +6,8 @@ try {
 }
 var BN = require('bn.js')
 
+var nullHash = new Buffer('0000000000000000000000000000000000000000000000000000000000000000', 'hex')
+
 function isHexString (str) {
   return !(typeof str !== 'string' || str.length === 0 || str.length % 2)
 }
@@ -57,6 +59,7 @@ function expandTarget (bits) {
 }
 
 module.exports = {
+  nullHash: nullHash,
   toHash: toHash,
   compressTarget: compressTarget,
   expandTarget: expandTarget
