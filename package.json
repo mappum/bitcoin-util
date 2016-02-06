@@ -23,7 +23,7 @@
     "browserify-buffertools": "^1.0.2"
   },
   "devDependencies": {
-    "standard": "^5.4.1",
+    "standard": "^6.0.0",
     "tap": "^5.1.1"
   },
   "optionalDependencies": {
