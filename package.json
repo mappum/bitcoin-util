@@ -20,7 +20,8 @@
   "license": "MIT",
   "dependencies": {
     "bn.js": "^4.6.4",
-    "browserify-buffertools": "^1.0.2"
+    "browserify-buffertools": "^1.0.2",
+    "buffertools": "^2.1.3"
   },
   "devDependencies": {
     "standard": "^6.0.3",
@@ -31,5 +32,13 @@
   },
   "browser": {
     "buffertools": "browserify-buffertools"
-  }
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mappum/bitcoin-util.git"
+  },
+  "bugs": {
+    "url": "https://github.com/mappum/bitcoin-util/issues"
+  },
+  "homepage": "https://github.com/mappum/bitcoin-util#readme"
 }
