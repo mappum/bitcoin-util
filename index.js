@@ -1,9 +1,4 @@
-var buffertools
-try {
-  buffertools = require('buffertools')
-} catch (e) {
-  buffertools = require('browserify-buffertools')
-}
+var reverse = require('buffer-reverse')
 
 var nullHash = new Buffer('0000000000000000000000000000000000000000000000000000000000000000', 'hex')
 
@@ -15,7 +10,7 @@ function toHash (hex) {
   if (hex.length !== 64 || !isHexString(hex)) {
     throw new Error('argument must be a hex string')
   }
-  return buffertools.reverse(new Buffer(hex, 'hex'))
+  return reverse(new Buffer(hex, 'hex'))
 }
 
 function compressTarget (target) {
