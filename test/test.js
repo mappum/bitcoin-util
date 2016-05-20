@@ -1,5 +1,5 @@
-var test = require('tap').test
-var u = require('./')
+var test = require('tape')
+var u = require('../')
 
 test('toHash', function (t) {
   t.throws(function () { u.toHash('012345') }, 'throws for invalid hash length')

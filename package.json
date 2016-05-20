@@ -4,7 +4,8 @@
   "description": "Utility functions for Bitcoin hashes and targets",
   "main": "index.js",
   "scripts": {
-    "test": "standard && tap test.js --cov"
+    "test": "standard && nyc tape test/*.js | faucet && nyc report",
+    "test-browser": "./test/browser.sh"
   },
   "keywords": [
     "bitcoin",
@@ -23,8 +24,11 @@
     "buffer-reverse": "^1.0.1"
   },
   "devDependencies": {
+    "faucet": "0.0.1",
+    "nyc": "^6.4.4",
     "standard": "^7.0.0",
-    "tap": "^5.1.1"
+    "tape": "^4.5.1",
+    "zuul": "^3.10.1"
   },
   "repository": {
     "type": "git",
